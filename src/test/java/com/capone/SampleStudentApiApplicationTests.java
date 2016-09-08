@@ -16,6 +16,7 @@ public class SampleStudentApiApplicationTests {
 	
 	@Test
 	public void myTest() {
+	    
 	}
 
 }
