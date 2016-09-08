@@ -32,21 +32,12 @@ public class StudentResource {
 		this.studentService = studentService;
 	}
 
-	@RequestMapping(value = "/", produces = "application/json")
-	Student index(Model model) {
-		model.addAttribute("product", "dgshgdsh");
-		Student a = new Student();
-		a.setFirstName("Amarpreet");
-
-		return new Student();
-	}
-
 	@RequestMapping(value = "/postStudent", method = RequestMethod.POST, consumes = "application/json")
 	String saveStudent(@RequestBody Student std) {
 		if (std != null) {
 			studentService.saveStudent(std);
 		}
-		
+
 		return "Student added successfully";
 	}
 
@@ -59,7 +50,6 @@ public class StudentResource {
 	public String handleFileUpload(
 			@RequestParam("fileUpload") MultipartFile file) {
 
-		
 		ArrayList<Student> studentList = CSVParserUtil.parserStudentCSV(file);
 
 		studentService.saveStudents(studentList);
@@ -73,10 +63,5 @@ public class StudentResource {
 		Student std = studentService.getStudentById(id);
 		return std;
 	}
-	
-	@ExceptionHandler
-	void handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException {
-	    response.sendError(HttpStatus.BAD_REQUEST.value(),"File is empty, please submit again");
-	}
-	
+
 }
