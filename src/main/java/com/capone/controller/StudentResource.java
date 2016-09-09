@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.capone.domain.Student;
+import com.capone.exceptionhandler.InvalidFileException;
+import com.capone.exceptionhandler.RecordNotFoundException;
 import com.capone.services.StudentService;
 import com.capone.util.CSVParserUtil;
 
@@ -48,8 +50,8 @@ public class StudentResource {
 
 	@RequestMapping(value = "/uploadStudents", method = RequestMethod.POST)
 	public String handleFileUpload(
-			@RequestParam("fileUpload") MultipartFile file) {
-
+			@RequestParam("fileUpload") MultipartFile file)
+			throws InvalidFileException {
 		ArrayList<Student> studentList = CSVParserUtil.parserStudentCSV(file);
 
 		studentService.saveStudents(studentList);
@@ -58,9 +60,13 @@ public class StudentResource {
 	}
 
 	@RequestMapping(value = "/getStudent/id/{id}", produces = "application/json")
-	public Student getStudentById(@PathVariable Integer id) {
+	public Student getStudentById(@PathVariable Integer id)
+			throws RecordNotFoundException {
 
 		Student std = studentService.getStudentById(id);
+		if (std == null) {
+			throw new RecordNotFoundException("Student doesnt exist in records");
+		}
 		return std;
 	}
 
