@@ -10,7 +10,7 @@
 <body>
 	<div align="center">
 		<h1>Upload File Upload to H2 Database</h1>
-		<form method="post" action="student/uploadStudents" enctype="multipart/form-data">
+		<form method="post" action="../student/uploadStudents" enctype="multipart/form-data">
 			<table border="0">
 				<tr>
 					<td>Pick file</td>
